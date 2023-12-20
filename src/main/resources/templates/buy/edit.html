@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title>[[#{buy.edit.headline}]]</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 class="flex-grow-1">[[#{buy.edit.headline}]]</h1>
+                <div>
+                    <a th:href="@{/buys}" class="btn btn-secondary">[[#{buy.edit.back}]]</a>
+                </div>
+            </div>
+            <div th:replace="~{fragments/forms::globalErrors('buy')}" />
+            <form th:action="${requestUri}" method="post">
+                <div th:replace="~{fragments/forms::inputRow(object='buy', field='id', disabled=true, type='number')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='buy', field='date', inputClass='js-datepicker')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='buy', field='buyComputer', type='select')}" />
+                <input type="submit" th:value="#{buy.edit.headline}" class="btn btn-primary mt-4" />
+            </form>
+        </div>
+    </body>
+</html>

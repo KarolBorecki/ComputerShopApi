@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title>[[#{gpu.list.headline}]]</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 class="flex-grow-1">[[#{gpu.list.headline}]]</h1>
+                <div>
+                    <a th:href="@{/gpus/add}" class="btn btn-primary ms-2">[[#{gpu.list.createNew}]]</a>
+                </div>
+            </div>
+            <div th:if="${gpus.empty}">[[#{gpu.list.empty}]]</div>
+            <div th:if="${!gpus.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">[[#{gpu.id.label}]]</th>
+                            <th scope="col">[[#{gpu.name.label}]]</th>
+                            <th scope="col">[[#{gpu.memory.label}]]</th>
+                            <th scope="col">[[#{gpu.gpusProducent.label}]]</th>
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="gpu : ${gpus}">
+                            <td>[[${gpu.id}]]</td>
+                            <td>[[${gpu.name}]]</td>
+                            <td>[[${gpu.memory}]]</td>
+                            <td>[[${gpu.gpusProducent}]]</td>
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/gpus/edit/{id}(id=${gpu.id})}" class="btn btn-sm btn-secondary">[[#{gpu.list.edit}]]</a>
+                                    <form th:action="@{/gpus/delete/{id}(id=${gpu.id})}"
+                                            th:hx-confirm="#{delete.confirm}" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-secondary">[[#{gpu.list.delete}]]</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

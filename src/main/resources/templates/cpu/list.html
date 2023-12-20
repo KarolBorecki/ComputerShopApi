@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title>[[#{cpu.list.headline}]]</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 class="flex-grow-1">[[#{cpu.list.headline}]]</h1>
+                <div>
+                    <a th:href="@{/cpus/add}" class="btn btn-primary ms-2">[[#{cpu.list.createNew}]]</a>
+                </div>
+            </div>
+            <div th:if="${cpus.empty}">[[#{cpu.list.empty}]]</div>
+            <div th:if="${!cpus.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">[[#{cpu.id.label}]]</th>
+                            <th scope="col">[[#{cpu.name.label}]]</th>
+                            <th scope="col">[[#{cpu.clock.label}]]</th>
+                            <th scope="col">[[#{cpu.cpusProducent.label}]]</th>
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="cpu : ${cpus}">
+                            <td>[[${cpu.id}]]</td>
+                            <td>[[${cpu.name}]]</td>
+                            <td>[[${cpu.clock}]]</td>
+                            <td>[[${cpu.cpusProducent}]]</td>
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/cpus/edit/{id}(id=${cpu.id})}" class="btn btn-sm btn-secondary">[[#{cpu.list.edit}]]</a>
+                                    <form th:action="@{/cpus/delete/{id}(id=${cpu.id})}"
+                                            th:hx-confirm="#{delete.confirm}" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-secondary">[[#{cpu.list.delete}]]</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
